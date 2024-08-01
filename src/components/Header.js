@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_API } from "../utils/Constants";
 import { cacheResult } from "../utils/SearchSlice";
 import { handleFilteredVideo } from "../utils/AllVideosSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [searchText, setSearchText] = useState("");
@@ -41,16 +42,20 @@ const Header = () => {
   }, [searchText]);
 
   const getSuggestions = async () => {
-    const data = await fetch(YOUTUBE_SEARCH_API + searchText);
-    const json = await data.json();
+    try {
+      const data = await fetch(YOUTUBE_SEARCH_API + searchText);
+      const json = await data.json();
 
-    setSuggestions(json[1]);
+      setSuggestions(json[1]);
 
-    dispatch(
-      cacheResult({
-        [searchText]: json[1],
-      })
-    );
+      dispatch(
+        cacheResult({
+          [searchText]: json[1],
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -62,13 +67,13 @@ const Header = () => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
           alt="Hamburger Icon"
         />
-        <a href="/">
+        <Link to="./">
           <img
-            className="w-[120px]"
+            className="w-[120px] cursor-pointer"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjJ3eqypsoYsYKfqRQARvArBYzJgLUfqErnQ&s"
             alt="yt__logo"
           />
-        </a>
+        </Link>
       </div>
       <div className="col-span-10 ml-24 relative">
         <input
