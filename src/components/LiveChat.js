@@ -25,29 +25,33 @@ const LiveChat = () => {
 
   return (
     <div>
-      <div className="border border-black h-[500px] w-[400px] ml5 overflow-y-scroll flex flex-col-reverse">
+      <div className="border border-gray-500 h-[500px] w-[400px] ml5 overflow-y-scroll flex flex-col-reverse rounded-t-md">
         {data.map((c, index) => (
           <ChatBox name={c.name} message={c.message} key={index} />
         ))}
       </div>
-      <input
-        value={doChat}
-        onChange={(e) => setDoChat(e.target.value)}
-        className="border border-black"
-      />
-      <button
-        onClick={() => {
-          dispatch(
-            storeChat({
-              name: "Mohit",
-              message: doChat,
-            })
-          );
-          setDoChat("");
-        }}
-      >
-        send
-      </button>
+      <div className="border border-gray-500 w-[400px] py-2 rounded-b-md p-2 grid grid-flow-col col-span-12">
+        <input
+          placeholder="Chat...."
+          value={doChat}
+          onChange={(e) => setDoChat(e.target.value)}
+          className=" bg-gray-2 00 rounded-2xl px-2 w-full col-span-10 placeholder:text-black  "
+        />
+        <button
+          className="col-span-2"
+          onClick={() => {
+            dispatch(
+              storeChat({
+                name: "Mohit",
+                message: doChat,
+              })
+            );
+            setDoChat("");
+          }}
+        >
+          send
+        </button>
+      </div>
     </div>
   );
 };
